@@ -1,0 +1,57 @@
+# ============================================================================
+# QUANT X — TRAINING-ONLY DEPENDENCIES (PR 151)
+# ----------------------------------------------------------------------------
+# The API container does not need these. They're only required on the
+# GPU box that runs ``python -m ml.training.runner --all``.
+#
+# Install order:
+#   pip install -r requirements.txt        # API + inference
+#   pip install -r requirements-train.txt  # training extras
+# ============================================================================
+
+-r requirements.txt
+
+# ── F5 AI SIP portfolio optimization ───────────────────────────────────────
+PyPortfolioOpt>=1.5.5
+
+# ── Foundation-model forecasters (Momentum/Swing/Positional) ───────────────
+# Chronos-2 (swing aux) on PyPI. TimesFM 2.5 via PyPI; >=2.0.1 fixes a
+# huggingface_hub 'proxies' constructor crash caught in local debugging.
+# einops is a Kronos runtime dep. Kronos itself is NOT on PyPI — clone
+# https://github.com/shiyu-coder/Kronos.git and add it to PYTHONPATH
+# (scripts/train_momentum_gpu.sh + scripts/smoke_momentum_local.sh do this).
+chronos-forecasting>=2.0.0
+timesfm[torch]>=2.0.1
+einops>=0.8.0
+# NOTE (macOS local debug): export KMP_DUPLICATE_LIB_OK=TRUE + FORECAST_DEVICE=cpu
+# (torch+timesfm+chronos duplicate-OpenMP segfault; MPS unsupported ops).
+
+# ── F8 RegimeIQ HMM ────────────────────────────────────────────────────────
+hmmlearn>=0.3.0
+
+# ── F2 Swing TFT + F6 VolCast TFT ──────────────────────────────────────────
+# pytorch-forecasting + lightning have no Python 3.10 wheels on PyPI.
+# Only used by vix_tft trainer (GPU-only). When ready to train vix_tft
+# on a Python 3.11+ pod, uncomment and reinstall:
+# pytorch-forecasting>=1.4.0
+# lightning>=2.1.3
+
+# ── Tabular ML stack ───────────────────────────────────────────────────────
+lightgbm>=4.1.0
+xgboost>=2.0.0
+scikit-learn>=1.4.0
+
+# ── Data ingest used only at training time ─────────────────────────────────
+yfinance>=0.2.36
+nsepy>=0.8                      # bhavcopy + corporate actions feed
+jugaad-data>=0.30               # historical bhavcopy fallback
+
+# ── F4 RL training extras (gymnasium + SB3 already in requirements.txt) ────
+# (no extras here — SB3 is sufficient for PPO+DDPG+A2C on Mlp policies)
+
+# ── Hyperparameter optimization (PR 165) ──────────────────────────────────
+# Bayesian search wrapper used by trainer base class. TPE sampler +
+# MedianPruner. Optional — trainers degrade gracefully when missing
+# (single-trial at default params).
+optuna>=3.6.0
+optuna-integration>=3.6.0
