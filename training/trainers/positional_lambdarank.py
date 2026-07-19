@@ -46,6 +46,8 @@ from ml.training.trainers.momentum_lambdarank import cached_universe  # same uni
 logger = logging.getLogger(__name__)
 
 _ROOT = Path(__file__).resolve().parents[3]  # ml/training/trainers/ -> repo root
+if not (_ROOT / "data").exists():  # standalone ml checkout: package dir is the repo root
+    _ROOT = Path(__file__).resolve().parents[2]
 
 
 @dataclass

@@ -42,6 +42,8 @@ from ml.training.specs import CVSpec, EDASpec, EngineSpec, EvalSpec
 logger = logging.getLogger(__name__)
 
 _ROOT = Path(__file__).resolve().parents[3]  # ml/training/trainers/ -> repo root
+if not (_ROOT / "data").exists():  # standalone ml checkout: package dir is the repo root
+    _ROOT = Path(__file__).resolve().parents[2]
 _CACHE_DIR = _ROOT / "data" / "cache"
 _CACHE_SUFFIX = "_NS_10y.csv"
 

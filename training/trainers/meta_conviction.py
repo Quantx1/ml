@@ -43,6 +43,8 @@ from ml.training.specs import CVSpec, EDASpec, EngineSpec, EvalSpec
 logger = logging.getLogger(__name__)
 
 _ROOT = Path(__file__).resolve().parents[3]  # ml/training/trainers/ -> repo root
+if not (_ROOT / "data").exists():  # standalone ml checkout: package dir is the repo root
+    _ROOT = Path(__file__).resolve().parents[2]
 
 #: Primary-engine horizon (embargo + label window) — must match the engines.
 _ENGINE_HORIZON = {"momentum": 20, "swing": 10}
