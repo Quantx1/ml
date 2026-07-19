@@ -1,0 +1,191 @@
+# ============================================================================
+# QUANT X .GITIGNORE
+# ============================================================================
+
+# Dependencies
+node_modules/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+/lib/
+/lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Environment variables - NEVER COMMIT THESE
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Testing
+coverage/
+.coverage
+htmlcov/
+.tox/
+.nox/
+.pytest_cache/
+.mypy_cache/
+
+# Next.js
+.next/
+out/
+
+# Vercel
+.vercel
+
+# Supabase local
+.supabase/
+
+# ML Models - Large files (use Git LFS or external storage)
+*.h5
+*.hdf5
+*.pkl
+*.joblib
+*.pt
+*.pth
+*.onnx
+artifacts/models/*.bin
+artifacts/models/*.safetensors
+
+# Data files (too large for git)
+*.csv
+*.parquet
+*.feather
+# PR 207 — exclude data/* contents but keep nse_tiers/ universe files
+/data/*
+!ml/data/
+!/data/nse_tiers/
+!/data/nse_tiers/**
+# paper window — frozen pre-registered baselines MUST be tracked (the API
+# reads them at runtime; freezing means version control)
+!/data/paper/
+!/data/paper/**
+
+# Notebooks checkpoints
+.ipynb_checkpoints/
+
+# Local config
+config.local.py
+secrets.json
+.gitconfig
+.emergent/
+
+# Railway
+.railway/
+
+# Modal
+.modal/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# OS files
+Thumbs.db
+
+# Jupyter
+.jupyter/
+
+# Cache
+.cache/
+*.cache
+
+# Archive (legacy code)
+_archive/
+
+# Output files (generated charts, validation CSVs)
+output/
+
+# Build artifacts
+frontend/tsconfig.tsbuildinfo
+
+# Reference/inspiration site scrapes
+intellectia.ai/
+www.luxalgo.com/
+frontend/demo ui:ux/
+
+# ML training logs
+lightning_logs/
+
+# Test reports
+test_reports/
+
+# Non-production docs
+AI_Trading_Signal_PRD.docx
+ai_prd_extracted.txt
+pkscreener.ini
+
+# Agent/memory
+.claude/
+memory/
+smoke_train_10_report.json
+data_audit.json
+data_quality_report.json
+smoke_*.json
+.env.bak
+.playwright-mcp/
+.superpowers/
+
+# Playwright test artifacts (root + frontend)
+test-results/
+playwright-report/
+frontend/test-results/
+frontend/playwright-report/
+frontend/tests/e2e/.auth/
+
+# Model cache (runtime artifacts, restored from B2)
+artifacts/cache/
+
+# Stray screenshots at repo root
+/finstocks-home.png
+/audit-*.png
+/*.png
+/*.jpeg
+
+# Local-only reference material (screenshots + design renders, not code).
+# competitor-research/ also holds CREDENTIALS.md — keep it out of git entirely.
+competitor-research/
+docs/superpowers/specs/v3-renders/
+
+# Scratch session notes + old design-mockup renders (reference brands; local-only)
+/V3_RESUME_NOTES.md
+frontend/public/v3-mockups/
