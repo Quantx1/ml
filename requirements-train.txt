@@ -1,15 +1,23 @@
 # ============================================================================
-# QUANT X — TRAINING-ONLY DEPENDENCIES (PR 151)
+# QUANT X — TRAINING DEPENDENCIES
 # ----------------------------------------------------------------------------
-# The API container does not need these. They're only required on the
-# GPU box that runs ``python -m ml.training.runner --all``.
+# Everything needed to run ``python -m ml.training.runner --all``, on top of
+# the base runtime deps. Installing this file alone is enough:
 #
-# Install order:
-#   pip install -r requirements.txt        # API + inference
-#   pip install -r requirements-train.txt  # training extras
+#   pip install -r ml/requirements-train.txt
+#
+# Trainers are CPU-capable except tft_swing (requires_gpu = True); the runner
+# takes --skip-gpu / --force-cpu to run the rest on a CPU box.
 # ============================================================================
 
+# Base runtime deps (numpy/pandas/scipy/sklearn/ta). Resolves relative to this
+# file, i.e. ml/requirements.txt.
 -r requirements.txt
+
+# CPU torch wheels — the default PyPI wheel pulls ~2.5 GB of unusable nvidia-*
+# CUDA packages. On an actual GPU box (RunPod), drop this line so the CUDA
+# build is selected instead.
+--extra-index-url https://download.pytorch.org/whl/cpu
 
 # ── F5 AI SIP portfolio optimization ───────────────────────────────────────
 PyPortfolioOpt>=1.5.5
@@ -40,6 +48,10 @@ hmmlearn>=0.3.0
 lightgbm>=4.1.0
 xgboost>=2.0.0
 scikit-learn>=1.4.0
+
+# ── Qlib (Alpha158 factor library) — used by the qlib_alpha158 trainer ─────
+pyqlib>=0.9.3
+pandas_market_calendars>=4.4
 
 # ── Data ingest used only at training time ─────────────────────────────────
 yfinance>=0.2.36

@@ -1,0 +1,29 @@
+# ============================================================================
+# QUANT X ML — BASE (RUNTIME / INFERENCE) DEPENDENCIES
+# ----------------------------------------------------------------------------
+# What you need to `import ml.*` and run `pytest ml/tests`.
+#
+# This file exists so the ml repo is installable standalone: requirements-train.txt
+# starts with `-r requirements.txt`, which previously resolved to nothing here
+# (the base file only existed in the backend repo) and broke both the README
+# install steps and CI.
+#
+# Kept deliberately small. Only these are imported at module scope anywhere in
+# the package — every heavy dep (torch, lightgbm, xgboost, transformers,
+# hmmlearn, chronos, qlib, optuna) is imported inside the function that uses
+# it, so they belong in requirements-train.txt rather than here.
+#
+# When ml is used as a submodule under backend, backend/requirements.txt is the
+# superset that governs — this file is for standalone checkouts.
+# ============================================================================
+
+numpy>=1.26.3
+# Pinned <3 to match backend/requirements.txt — pandas 3.x is released and a
+# bare `>=2.1.4` resolves to it, but the code targets pandas 2.x.
+pandas>=2.1.4,<3.0.0
+scipy>=1.11.4
+scikit-learn>=1.4.0        # regime_detector.py imports StandardScaler at module scope
+ta>=0.11.0                 # features/indicators.py imports at module scope
+requests>=2.31.0
+python-dateutil>=2.8.2
+pytz>=2023.3.post1
